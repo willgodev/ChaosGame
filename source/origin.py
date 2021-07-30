@@ -10,7 +10,7 @@ def main():
     original_length = 0
 
     pygame.init()
-    screen = pygame.display.set_mode((800, 800))
+    screen = pygame.display.set_mode((1920, 1080))
     pygame.Surface.fill(screen, Color(0, 0, 0))
 
     running = True
@@ -24,6 +24,12 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     start_simulation = not start_simulation
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_r and not start_simulation:
+                    screen.fill(Color(0, 0, 0))
+                    pixel_positions = []
+                    latest_pixel_pos = None
             if event.type == pygame.QUIT:
                 running = False
 
@@ -33,7 +39,7 @@ def main():
                 rand_pos1 = pixel_positions[random.randint(0, len(pixel_positions) - 1)]
                 rand_pos2 = pixel_positions[random.randint(0, len(pixel_positions) - 1)]
                 while rand_pos1 == rand_pos2:
-                    rand_pos2 = pixel_positions[random.randint(0, len(pixel_positions))]
+                    rand_pos2 = pixel_positions[random.randint(0, len(pixel_positions) - 1)]
                 mp = get_midpoint(rand_pos1, rand_pos2)
                 gfxdraw.pixel(screen, mp[0], mp[1], Color(255, 255, 255))
                 latest_pixel_pos = mp
